@@ -3,25 +3,19 @@ import os
 import glob
 from PIL import Image
 
-# grab the first & second argument with sys argv
 input_folder = sys.argv[1]
 output_folder = sys.argv[2]
 
 
-# check if output/ exists otherwise create folder
 def check_output_dir(folder):
-    """Check if the output folder exists"""
+    """Check if the output folder exists otherwise create folder"""
     base_path = f'./{input_folder}'
-    if os.path.isdir(f'{base_path}{folder}'):
-        return True
-    else:
-        os.mkdir(f'{base_path}{folder}')
+    if not os.path.exists(f'{base_path}{folder}'):
+        os.makedirs(f'{base_path}{folder}')
         print(f'Created {base_path}{folder}')
-        return False
 
 
-# loop through input folder and convert images to png, save to output/ folder
-def files_loop(path):
+def process_files(path):
     """Loop though input folder and convert to PNG, Save to Output Folder"""
     check_output_dir(output_folder)
     os.chdir(path)
@@ -32,4 +26,5 @@ def files_loop(path):
         img.save(f'./{output_folder}{new_filename}_new.png', 'png')
 
 
-files_loop(input_folder)
+if __name__ == "__main__":
+    process_files(input_folder)
